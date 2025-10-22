@@ -14,3 +14,10 @@ Hermes is a **live-only**, open-source multi-chain trading agent for:
 - **Safety first**: you must set keys and RPCs; start with tiny sizes.
 
 ## Repo Map
+src/
+cli.ts # CLI entry
+core/engine.ts # strategy runner
+exchanges/ # solana.ts, evm.ts
+strategies/ # simpleMomentum.ts, llmPolicy.ts
+llm/router.ts # provider-agnostic caller
+configs/tokens/ # token registries per chain
