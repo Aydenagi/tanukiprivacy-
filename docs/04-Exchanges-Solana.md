@@ -1,32 +1,24 @@
+# Solana Exchange Adapter
 
----
-
-### docs/05-Exchanges-EVM.md
-```md
-# EVM Exchange Adapter (BSC/Astar)
-
-Hermes uses **UniswapV2-compatible routers**.
+Hermes uses **Jupiter** for quotes and swap building.
 
 ## Flow
-- `getQuote()` → `getAmountsOut(amountIn, path)`
-- `swap()` → `swapExactTokensForTokens(...)`
-- Automatically checks **allowance** and sends `approve()` if needed.
+1. `getQuote()` → `/v6/quote` (finds route with `inAmount`, `outAmount`)
+2. `swap()` → `/v6/swap`, signs returned transaction with your `SOLANA_KEYPAIR`
+3. Submit via `sendTransaction`.
 
 ```mermaid
 sequenceDiagram
   participant Strat as Strategy
-  participant Evm as EvmExchange
-  participant ERC20 as Base Token
-  participant R as UniV2 Router
+  participant Sol as SolanaExchange
+  participant Jup as Jupiter API
+  participant Net as Solana RPC
 
-  Strat->>Evm: getQuote()
-  Evm->>R: getAmountsOut(in, path)
-  R-->>Evm: amounts[]
-
-  Strat->>Evm: swap()
-  Evm->>ERC20: allowance(owner, router)
-  alt allowance < needed
-    Evm->>ERC20: approve(router, amountIn)
-  end
-  Evm->>R: swapExactTokensForTokens(...)
-  R-->>Evm: tx receipt
+  Strat->>Sol: getQuote()
+  Sol->>Jup: /v6/quote
+  Jup-->>Sol: best route
+  Strat->>Sol: swap(route)
+  Sol->>Jup: /v6/swap
+  Jup-->>Sol: base64 txn
+  Sol->>Net: sendTransaction(tx)
+  Net-->>Sol: signature
