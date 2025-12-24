@@ -1,0 +1,15 @@
+{
+  "thresholds": {
+    "alert": 40,
+    "isolate": 70,
+    "terminate": 90
+  },
+  "weights": {
+    "suspicious_child_process": 20,
+    "clipboard_access": 15,
+    "wallet_file_access": 30,
+    "unsigned_binary": 10,
+    "network_exfiltration": 25
+  },
+  "decay_seconds": 900
+}
