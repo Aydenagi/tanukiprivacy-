@@ -1,6 +1,9 @@
 
 # Tanuki
 
+
+![Uploading image.png…]()
+
 Tanuki is a local-first privacy defense agent that monitors operating system behavior to detect malware, credential theft, and wallet-draining activity.
 
 It is behavior-driven, privacy-preserving, and designed to run entirely on the user’s machine.
