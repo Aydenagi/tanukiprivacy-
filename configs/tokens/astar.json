@@ -1,12 +1,26 @@
 {
-  "WASTR": {
-    "symbol": "WASTR",
-    "address": "0x0000000000000000000000000000000000000000",
-    "decimals": 18
+  "version": "1.0.0",
+  "risk_thresholds": {
+    "low": 25,
+    "medium": 50,
+    "high": 75,
+    "critical": 90
   },
-  "USDT": {
-    "symbol": "USDT",
-    "address": "0x0000000000000000000000000000000000000000",
-    "decimals": 6
+  "weights": {
+    "process_injection": 30,
+    "privilege_escalation": 25,
+    "clipboard_access": 15,
+    "wallet_file_access": 20,
+    "unsigned_binary": 10,
+    "network_exfiltration": 25
+  },
+  "decay": {
+    "enabled": true,
+    "half_life_seconds": 900
+  },
+  "actions": {
+    "medium": ["alert"],
+    "high": ["alert", "isolate"],
+    "critical": ["terminate", "block_network"]
   }
 }
